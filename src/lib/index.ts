@@ -1,1 +1,3 @@
-console.log('hi')
+export function process(text: string) : string[] {
+    return [];
+}

@@ -4,7 +4,7 @@
   "description": "A pure JS implementation of the Rapid Automated Keyword Extraction (RAKE) algorithm.",
   "main": "dist/lib/index.js",
   "scripts": {
-    "build": "tsc -p .",
+    "build": "rm -rf dist && tsc -p .",
     "test": "npm run build && mocha --opts .mocha",
     "watch": "mocha-typescript-watch --opts .mocha"
   },
@@ -32,6 +32,9 @@
     "typescript": "^2.3.2"
   },
   "dependencies": {
+    "franc": "^3.1.0",
+    "lodash": "^4.17.4",
+    "nltk-stopwords": "^1.0.3",
     "stopword": "^0.1.1"
   }
 }
