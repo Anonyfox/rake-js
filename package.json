@@ -5,7 +5,8 @@
   "main": "dist/lib/index.js",
   "scripts": {
     "build": "rm -rf dist && tsc -p .",
-    "test": "npm run build && mocha --opts .mocha",
+    "lint": "tslint -c tslint.json 'src/**/*.ts' --fix",
+    "test": "npm run lint && npm run build && mocha --opts .mocha",
     "watch": "mocha-typescript-watch --opts .mocha"
   },
   "keywords": [
@@ -29,9 +30,11 @@
     "source-map-support": "^0.4.15",
     "ts-mocha": "^1.0.3",
     "ts-node": "^3.0.4",
+    "tslint": "^5.2.0",
     "typescript": "^2.3.2"
   },
   "dependencies": {
+    "condense-whitespace": "^1.0.0",
     "franc": "^3.1.0",
     "lodash": "^4.17.4",
     "nltk-stopwords": "^1.0.3",

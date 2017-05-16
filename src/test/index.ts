@@ -1,55 +1,68 @@
-import { suite, test, slow, timeout } from "mocha-typescript";
-import { expect } from 'chai'
-import { clean } from '../lib/clean'
+import { expect } from "chai";
+import { skip, slow, suite, test, timeout } from "mocha-typescript";
+import { clean, strip } from "../lib/clean";
 
 @suite(timeout(3000), slow(1000))
 class Index {
 
-    @test cleanStringEnglish() {
-        const input = clean('I know that I can use some second expectation.', 'english');
-        const result = 'I know I use second expectation.';
+    @test public stripPunctuation() {
+        expect(strip("test.")).to.be.equal("test");
+    }
+
+    @test.skip public stripNoUmlauts() {
+        // wait for typescript support: http://www.ecma-international.org/ecma-262/6.0/#sec-literals-string-literals
+        expect(strip("täst")).to.be.equal("täst");
+    }
+
+    @test public stripBadWhitespace() {
+        expect(strip(" a  \t \r \n \r\n b ")).to.be.equal("a b");
+    }
+
+    @test public cleanStringEnglish() {
+        const input = clean("I know that I can use some second expectation.", "english");
+        const result = "I know I use second expectation.";
         expect(input).to.be.equal(result);
     }
 
-    @test cleanStringEnglishUnknown() {
-        const input = clean('I know that I can use some second expectation.');
-        const result = 'I know I use second expectation.';
+    @test public cleanStringEnglishUnknown() {
+        const input = clean("I know that I can use some second expectation.");
+        const result = "I know I use second expectation.";
         expect(input).to.be.equal(result);
     }
 
-    @test cleanArrayEnglish() {
-        const input = clean('I know I use second expectation.'.split(' '), 'english');
-        const result = ['I', 'know', 'I', 'use', 'second', 'expectation.'];
+    @test public cleanArrayEnglish() {
+        const input = clean("I know I use second expectation.".split(" "), "english");
+        const result = ["I", "know", "I", "use", "second", "expectation."];
         expect(input).to.have.same.members(result);
     }
 
-    @test cleanArrayEnglishUnknown() {
-        const input = clean('I know I use second expectation.'.split(' '));
-        const result = ['I', 'know', 'I', 'use', 'second', 'expectation.'];
+    @test public cleanArrayEnglishUnknown() {
+        const input = clean("I know I use second expectation.".split(" "));
+        const result = ["I", "know", "I", "use", "second", "expectation."];
         expect(input).to.have.same.members(result);
     }
 
-    @test cleanStringGerman() {
-        const input = clean('Die eine Sache von damals.', 'german');
-        const result = 'Die Sache damals.'
+    @test public cleanStringGerman() {
+        const input = clean("Die eine Sache von damals.", "german");
+        const result = "Die Sache damals.";
         expect(input).to.be.equal(result);
     }
 
-    @test cleanStringGermanUnknown() {
-        const input = clean('Die eine Sache von damals.');
-        const result = 'Die Sache damals.';
+    @test public cleanStringGermanUnknown() {
+        const input = clean("Die eine Sache von damals.");
+        const result = "Die Sache damals.";
         expect(input).to.be.equal(result);
     }
 
-    @test cleanArrayGerman() {
-        const input = clean(['Die', 'eine', 'Sache', 'von', 'damals'], 'german');
-        const result = ['Die', 'Sache', 'damals']
+    @test public cleanArrayGerman() {
+        const input = clean(["Die", "eine", "Sache", "von", "damals"], "german");
+        const result = ["Die", "Sache", "damals"];
         expect(input).to.have.same.members(result);
     }
 
-    @test cleanArrayGermanUnknown() {
-        const input = clean(['Die', 'eine', 'Sache', 'von', 'damals']);
-        const result = ['Die', 'Sache', 'damals']
+    @test public cleanArrayGermanUnknown() {
+        const input = clean(["Die", "eine", "Sache", "von", "damals"]);
+        const result = ["Die", "Sache", "damals"];
         expect(input).to.have.same.members(result);
     }
 
