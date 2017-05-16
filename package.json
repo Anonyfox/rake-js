@@ -28,8 +28,6 @@
     "mocha": "^3.4.1",
     "mocha-typescript": "^1.1.2",
     "source-map-support": "^0.4.15",
-    "ts-mocha": "^1.0.3",
-    "ts-node": "^3.0.4",
     "tslint": "^5.2.0",
     "typescript": "^2.3.2"
   },
@@ -37,7 +35,6 @@
     "condense-whitespace": "^1.0.0",
     "franc": "^3.1.0",
     "lodash": "^4.17.4",
-    "nltk-stopwords": "^1.0.3",
-    "stopword": "^0.1.1"
+    "nltk-stopwords": "^1.0.3"
   }
 }
