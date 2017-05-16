@@ -1,0 +1,3 @@
+dist/test/*.js
+--ui mocha-typescript
+--require source-map-support/register
