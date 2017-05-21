@@ -24,6 +24,7 @@
   "license": "LGPL-3.0",
   "devDependencies": {
     "@types/mocha": "^2.2.41",
+    "@types/node": "^7.0.21",
     "chai": "^3.5.0",
     "mocha": "^3.4.1",
     "mocha-typescript": "^1.1.2",
