@@ -38,6 +38,18 @@ export class CoOccurencesMatrix {
         return map(take(sorted, resultSize), 'word');
     }
 
+    public getBestWords(): string[] {
+        const list = [];
+        for (const word in this.wordRatioOfDegreeToFreq) {
+            if (word) {
+                list.push({ word, score: this.wordRatioOfDegreeToFreq[word] });
+            }
+        }
+        const sorted = sortBy(list, ['score', 'word']).reverse();
+        const resultSize = Math.ceil(sorted.length / 3.0);
+        return map(take(sorted, resultSize), 'word');
+    }
+
     private createZeroMatrix() {
         const len = this.words.length;
         this.matrix = Array(len).fill( Array(len).fill(0) );
