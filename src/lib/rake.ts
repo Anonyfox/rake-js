@@ -1,7 +1,10 @@
-import { map } from 'lodash';
-import { CandidatesDictionary } from './candidates_dictionary';
+import { groupBy, invert, map, sortBy, sum, take } from 'lodash';
 import { languageName } from './clean';
-import { CoOccurencesMatrix } from './co_occurences_matrix';
+import { clean, strip } from './clean';
+import { Matrix } from './matrix';
+import { Phrases } from './phrases';
+import { Stemmer } from './stemmer';
+import { load } from './stoplist';
 
 // can be used to tweak the algorithm or to use it without the defaults
 export interface IAlgorithmOptions {
@@ -21,15 +24,27 @@ export function rake(params: IAlgorithmParameters): string[] {
     const splitter = buildDelimiterRegexp(params.delimiters);
     const wordArray = params.corpus.replace(/\\[nrt]/g, '. ').split(splitter);
 
-    // step 2: find possible candidate phrases
-    const dict = new CandidatesDictionary(wordArray, params.stopwords, params.stemmer);
+    // step 2: loop through all words, generate ngrams/stems/phrases/metrics
+    const stemmer = new Stemmer(params.language);
+    const stopwords = load(params.language);
+    const phrases = new Phrases(stemmer, stopwords);
+    phrases.process(wordArray);
 
-    // step 3: build a matrix of co-occurences of all words
-    const matrix = new CoOccurencesMatrix(dict.values(), dict.occurences());
+    // step 3: build a co-occurence matrix for all words (-> stems)
+    const stemList = stemmer.getStems();
+    const matrix = new Matrix(stemList);
+    for (const phrase of phrases.phrases) {
+        matrix.process(phrase.stems);
+    }
+    const stemScores = matrix.calculateScores();
 
-    // step 4: return the phrases with the best scoring phrases
-    return matrix.getBestPhrases();
-
+    // step 4: examine the phrases with the best combined scores
+    for (const phrase of phrases.phrases) {
+        phrase.calculateScore(stemScores);
+    }
+    phrases.joinDuplicates();
+    const results = phrases.bestPhrases();
+    return results;
 }
 
 // build a single splitter regexp from the given delimiter characters

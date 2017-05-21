@@ -5,7 +5,7 @@ import { join } from 'path';
 import * as Snowball from 'snowball';
 import { load } from '../lib/stoplist';
 
-import { buildDelimiterRegexp, IAlgorithmParameters, rake } from '../lib/rake_2';
+import { buildDelimiterRegexp, IAlgorithmParameters, rake } from '../lib/rake';
 
 @suite(timeout(1000), slow(100))
 class RAKE {
@@ -70,6 +70,23 @@ class RAKE {
         expect(result).to.include('mietpreisbremse');
         expect(result).to.include('vermieter');
         expect(result).to.include('deutschland');
+    }
+
+    @test public worksWithGermanPressContent() {
+        const file = join(__dirname, '..', '..', 'examples', 'ntv.txt');
+        const input: IAlgorithmParameters = {
+            corpus: readFileSync(file, 'utf-8'),
+            delimiters: ['\\s+'],
+            language: 'german',
+            stemmer: new Snowball('german'),
+            stopwords: load('german'),
+        };
+        const result = rake(input);
+        // tslint:disable-next-line
+        // console.log(result);
+        expect(result).to.include('teleskop');
+        expect(result).to.include('california institute of technology');
+        expect(result).to.include('de zeeuw');
     }
 
     @test public worksWithLongFormContent() {
