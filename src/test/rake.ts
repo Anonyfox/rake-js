@@ -16,7 +16,7 @@ class RAKE {
         expect(buildDelimiterRegexp(input).toString()).to.be.equal(result);
     }
 
-    @test.skip public worksWithSimpleTexts() {
+    @test public worksWithSimpleTexts() {
         const input: IAlgorithmParameters = {
             corpus: `For decades, video games have been criticized for
                 purportedly wasting time, stifling creativity, and even
@@ -28,14 +28,17 @@ class RAKE {
             stemmer: new Snowball('English'),
             stopwords: load('english'),
         };
-        const expected = [ 'video games', 'influencing violent', 'purportedly wasting' ];
+        const expected = [ 'video games',
+            'purportedly wasting time',
+            'influencing violent behaviors',
+            'stifling creativity' ];
         const result = rake(input);
         // tslint:disable-next-line
         // console.log(result);
         expect(result).to.have.same.members(expected);
     }
 
-    @test.skip public worksWithNewsContent() {
+    @test public worksWithNewsContent() {
         const file = join(__dirname, '..', '..', 'examples', 'venturebeat.txt');
         const input: IAlgorithmParameters = {
             corpus: readFileSync(file, 'utf-8'),
@@ -63,13 +66,13 @@ class RAKE {
         };
         const result = rake(input);
         // tslint:disable-next-line
-        console.log(result);
-        expect(result).to.include('verteuerungen');
+        // console.log(result);
+        expect(result).to.include('mietpreisbremse');
         expect(result).to.include('vermieter');
-        expect(result).to.include('widerstand');
+        expect(result).to.include('deutschland');
     }
 
-    @test.skip public worksWithLongFormContent() {
+    @test public worksWithLongFormContent() {
         const file = join(__dirname, '..', '..', 'examples', 'waitbutwhy.txt');
         const input: IAlgorithmParameters = {
             corpus: readFileSync(file, 'utf-8'),
@@ -81,10 +84,10 @@ class RAKE {
         const result = rake(input);
         // tslint:disable-next-line
         // console.log(result);
-        expect(result).to.include('worldwide network');
-        expect(result).to.include('technological progress');
-        expect(result).to.include('thinking exponentially');
-        expect(result).to.include('simulate evolution');
+        expect(result).to.include('artificial intelligence');
+        expect(result).to.include('brain emulation');
+        expect(result).to.include('computers');
+        expect(result).to.include('evolution');
     }
 
 }
