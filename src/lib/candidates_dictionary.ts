@@ -34,7 +34,6 @@ export class CandidatesDictionary {
             for (const fragment of phraseCleaned.split(/\s+/)) {
                 this.push(fragment);
             }
-            // this.pop();
         } else if (this.stoplist.has(phraseCleaned)) { // discard stopwords
             this.pop();
         } else if (phrase === phraseCleaned) { // stash clean phrases
