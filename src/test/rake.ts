@@ -25,8 +25,6 @@ class RAKE {
                 their systems.`,
             delimiters: ['\\s+'],
             language: 'english',
-            stemmer: new Snowball('English'),
-            stopwords: load('english'),
         };
         const expected = [ 'video games',
             'purportedly wasting time',
@@ -44,8 +42,6 @@ class RAKE {
             corpus: readFileSync(file, 'utf-8'),
             delimiters: ['\\s+'],
             language: 'english',
-            stemmer: new Snowball('English'),
-            stopwords: load('english'),
         };
         const result = rake(input);
         // tslint:disable-next-line
@@ -61,8 +57,6 @@ class RAKE {
             corpus: readFileSync(file, 'utf-8'),
             delimiters: ['\\s+'],
             language: 'german',
-            stemmer: new Snowball('german'),
-            stopwords: load('german'),
         };
         const result = rake(input);
         // tslint:disable-next-line
@@ -78,8 +72,6 @@ class RAKE {
             corpus: readFileSync(file, 'utf-8'),
             delimiters: ['\\s+'],
             language: 'german',
-            stemmer: new Snowball('german'),
-            stopwords: load('german'),
         };
         const result = rake(input);
         // tslint:disable-next-line
@@ -95,8 +87,6 @@ class RAKE {
             corpus: readFileSync(file, 'utf-8'),
             delimiters: ['\\s+'],
             language: 'english',
-            stemmer: new Snowball('English'),
-            stopwords: load('english'),
         };
         const result = rake(input);
         // tslint:disable-next-line

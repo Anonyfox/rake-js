@@ -10,8 +10,6 @@ import { load } from './stoplist';
 export interface IAlgorithmOptions {
     delimiters: string[];
     language: languageName;
-    stopwords: Set<string>;
-    stemmer: any;
 }
 
 // the actual parameters for the RAKE algorithm

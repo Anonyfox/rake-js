@@ -3,5 +3,5 @@
 ## TODO:
 
 - [ ] more languages (only handful are whitelisted for now)
-- [ ] stemming
+- [x] stemming
 - [ ] duplicate keyword filtering
