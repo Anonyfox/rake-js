@@ -65,7 +65,7 @@ class RAKE {
         // tslint:disable-next-line
         // console.log(result);
         expect(result).to.include('verteuerungen');
-        expect(result).to.include('vermieter');
+        expect(result).to.include('viele vermieter');
         expect(result).to.include('widerstand');
     }
 

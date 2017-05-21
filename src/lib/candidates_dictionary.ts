@@ -1,3 +1,5 @@
+import { any } from 'lodash';
+
 import { clean, strip } from './clean';
 import { IAlgorithmParameters } from './rake';
 
@@ -29,8 +31,10 @@ export class CandidatesDictionary {
     private push(phrase: string) {
         const phraseCleaned = strip(phrase.toLowerCase());
         if (/\s+/.test(phraseCleaned)) {
-            // throw new Error(`whitespace phrase: ${phrase} -> ${phraseCleaned}`);
-            this.pop();
+            for (const fragment of phraseCleaned.split(/\s+/)) {
+                this.push(fragment);
+            }
+            // this.pop();
         } else if (this.stoplist.has(phraseCleaned)) { // discard stopwords
             this.pop();
         } else if (phrase === phraseCleaned) { // stash clean phrases
