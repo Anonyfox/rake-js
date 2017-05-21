@@ -7,7 +7,7 @@ import * as stopwords from 'nltk-stopwords';
 
 import { CandidatesDictionary } from '../lib/candidates_dictionary';
 
-@suite(timeout(3000), slow(1000))
+@suite(timeout(100), slow(50))
 class CandidatesDictionaryTest {
 
     @test public worksOnSimpleTexts() {

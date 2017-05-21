@@ -5,7 +5,7 @@ import * as stopwords from 'nltk-stopwords';
 import { CandidatesDictionary } from '../lib/candidates_dictionary';
 import { CoOccurencesMatrix } from '../lib/co_occurences_matrix';
 
-@suite(timeout(3000), slow(1000))
+@suite(timeout(100), slow(50))
 class CoOccurencesMatrixTest {
 
     @test public worksOnSimpleTexts() {

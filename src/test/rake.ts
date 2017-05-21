@@ -6,7 +6,7 @@ import { join } from 'path';
 
 import { buildDelimiterRegexp, IAlgorithmParameters, rake } from '../lib/rake';
 
-@suite(timeout(3000), slow(100))
+@suite(timeout(1000), slow(100))
 class RAKE {
 
     @test public buildSplitterFromDelimiterArray() {
