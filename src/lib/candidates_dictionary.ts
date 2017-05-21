@@ -8,8 +8,10 @@ export class CandidatesDictionary {
     private stoplist: Set<string>;
     private lastPhrase: string = '';
     private wordOccurences: { [word: string]: number} = {};
+    private stemOccurences: { [word: string]: number} = {};
+    private stemWordMappings: { [word: string]: string[]} = {};
 
-    constructor(wordArray: string[], stoplist: Set<string>) {
+    constructor(wordArray: string[], stoplist: Set<string>, private stemmer?: any) {
         this.stoplist = stoplist;
         for (const phrase of wordArray) {
             this.push(phrase);
@@ -57,7 +59,7 @@ export class CandidatesDictionary {
     // take the value out of the `lastPhrase` cache and into the candidatess list
     private pop() {
         if (this.lastPhrase !== '') {
-            this.candidates.push(this.lastPhrase);
+            this.candidates.push(strip(this.lastPhrase));
             this.lastPhrase = '';
         }
     }
@@ -70,4 +72,22 @@ export class CandidatesDictionary {
             this.wordOccurences[word] = 1;
         }
     }
+
+    // private calculateStems(word: string) {
+    //     const stemmer = this.stemmer;
+    //     for (const word in this.wordOccurences) {
+    //         if (word) {
+    //             const numOccurences = this.wordOccurences[word];
+    //             stemmer.setCurrent(word);
+    //             stemmer.stem();
+    //             const stem = stemmer.getCurrent();
+    //             if (this.stemOccurences[stem]) {
+    //                 this.stemOccurences[stem]++;
+    //             } else {
+    //                 this.stemOccurences[stem] = 1;
+    //                 this.stemWordMappings[stem] = [word];
+    //             }
+    //         }
+    //     }
+    // }
 }

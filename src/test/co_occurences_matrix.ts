@@ -18,11 +18,11 @@ class CoOccurencesMatrixTest {
         const dict = new CandidatesDictionary(corpus, stops);
         const matrix = new CoOccurencesMatrix(dict.values(), dict.occurences());
         const result = matrix.getBestPhrases();
-        const expected = [ 'even influencing violent behaviors',
-            'purportedly wasting time',
-            'video games',
+        const expected = [ 'video games',
             'unlikely tool',
-            'stifling creativity' ];
+            'stifling creativity',
+            'systems',
+            'seems' ];
         // tslint:disable-next-line
         // console.log('comatrix: ', result);
         expect(result).to.have.same.members(expected);

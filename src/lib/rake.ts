@@ -1,7 +1,6 @@
-import { includes, isNumber, map } from 'lodash';
-import * as stopwords from 'nltk-stopwords';
+import { map } from 'lodash';
 import { CandidatesDictionary } from './candidates_dictionary';
-import { languageName, strip } from './clean';
+import { languageName } from './clean';
 import { CoOccurencesMatrix } from './co_occurences_matrix';
 
 // can be used to tweak the algorithm or to use it without the defaults
@@ -9,6 +8,7 @@ export interface IAlgorithmOptions {
     delimiters: string[];
     language: languageName;
     stopwords: Set<string>;
+    stemmer: any;
 }
 
 // the actual parameters for the RAKE algorithm
@@ -22,7 +22,7 @@ export function rake(params: IAlgorithmParameters): string[] {
     const wordArray = params.corpus.replace(/\\[nrt]/g, '. ').split(splitter);
 
     // step 2: find possible candidate phrases
-    const dict = new CandidatesDictionary(wordArray, params.stopwords);
+    const dict = new CandidatesDictionary(wordArray, params.stopwords, params.stemmer);
 
     // step 3: build a matrix of co-occurences of all words
     const matrix = new CoOccurencesMatrix(dict.values(), dict.occurences());

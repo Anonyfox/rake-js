@@ -52,7 +52,11 @@ export class CoOccurencesMatrix {
 
     private createZeroMatrix() {
         const len = this.words.length;
-        this.matrix = Array(len).fill( Array(len).fill(0) );
+        const matrix = [];
+        for (let i = 0; i < len; i++) {
+            matrix.push(Array(len).fill(0));
+        }
+        this.matrix = matrix;
     }
 
     private createWordIndex() {
@@ -101,9 +105,14 @@ export class CoOccurencesMatrix {
     private calculatePhraseScores() {
         for (const phrase of this.phrases) {
             let sum = 0;
+            let numWords = 0.0;
             for (const word of phrase.split(' ')) {
+                numWords += 1;
                 sum += this.wordRatioOfDegreeToFreq[word];
+                // sum += this.wordDegreeScores[word];
+                // sum += this.wordFreqScores[word];
             }
+            sum -= numWords * numWords - numWords;
             this.phraseScores[phrase] = sum;
         }
     }
