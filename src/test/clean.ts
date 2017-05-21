@@ -9,7 +9,7 @@ class Index {
         expect(strip('test.')).to.be.equal('test');
     }
 
-    @test.skip public stripNoUmlauts() {
+    @test public stripNoUmlauts() {
         // wait for typescript support: http://www.ecma-international.org/ecma-262/6.0/#sec-literals-string-literals
         expect(strip('täst')).to.be.equal('täst');
     }

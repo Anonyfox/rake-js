@@ -28,7 +28,8 @@ export class CandidatesDictionary {
     // core logic: analyze and add another phrase to the dict
     private push(phrase: string) {
         const phraseCleaned = strip(phrase.toLowerCase());
-        if (phraseCleaned.length < 2) {
+        if (/\s+/.test(phraseCleaned)) {
+            // throw new Error(`whitespace phrase: ${phrase} -> ${phraseCleaned}`);
             this.pop();
         } else if (this.stoplist.has(phraseCleaned)) { // discard stopwords
             this.pop();

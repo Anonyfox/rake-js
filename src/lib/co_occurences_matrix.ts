@@ -1,4 +1,4 @@
-import { countBy, map, sortBy, sum, take } from 'lodash';
+import { countBy, isNumber, map, sortBy, sum, take } from 'lodash';
 
 export interface IWordDict { [word: string]: number; }
 
@@ -40,15 +40,7 @@ export class CoOccurencesMatrix {
 
     private createZeroMatrix() {
         const len = this.words.length;
-        const matrix = [];
-        for (let y = 0; y < len; y++) {
-            const line = [];
-            for (let x = 0; x < len; x++) {
-                line.push(0);
-            }
-            matrix.push(line);
-        }
-        this.matrix = matrix;
+        this.matrix = Array(len).fill( Array(len).fill(0) );
     }
 
     private createWordIndex() {
@@ -68,7 +60,7 @@ export class CoOccurencesMatrix {
                 for (const otherWord of words) {
                     const otherWordIndex = this.wordIndex[otherWord];
                     const wordIndex = this.wordIndex[word];
-                    if (wordIndex && otherWordIndex) {
+                    if (isNumber(wordIndex) && isNumber(otherWordIndex)) {
                         this.matrix[otherWordIndex][wordIndex]++;
                     }
                 }
@@ -80,11 +72,17 @@ export class CoOccurencesMatrix {
         for (let i = 0; i < this.words.length; i++) {
             const word = this.words[i];
             const row = this.matrix[i];
-            const deg = sum(row);
-            const freq = countBy(row, (num) => num > 0).true;
+            let deg = 0.0;
+            let freq = 0.0;
+            for (const col of row) {
+                if (col !== 0) {
+                    deg += col;
+                    freq++;
+                }
+            }
             this.wordDegreeScores[word] = deg;
             this.wordFreqScores[word] = freq;
-            this.wordRatioOfDegreeToFreq[word] = parseFloat(deg) / parseFloat(freq);
+            this.wordRatioOfDegreeToFreq[word] = deg / freq;
         }
     }
 

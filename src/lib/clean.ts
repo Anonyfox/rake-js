@@ -15,8 +15,8 @@ export type languageName = 'german' | 'english' | 'italian' | 'dutch' |
 
 // replace all non-word characters from string
 export function strip(text: string): string {
-    const txt = text.replace(/\W/ug, ' ')
-        .replace(/[\A\s]+\w[\z\s]+/g, ' ');
+    const txt = text.replace(/[^a-zäöüß']/ig, ' ')
+        .replace(/(^|\s)+\w($|\s)+/g, ' ');
     return condenseWhitespace(txt);
 }
 

@@ -41,11 +41,28 @@ class CandidatesDictionaryTest {
         const corpus = readFileSync(file, 'utf-8')
             .replace(/\\[nrt]/g, ' ')
             .split(/\s+/);
+        // tslint:disable-next-line
+        // console.log('corpus words: ', corpus);
         const stops: Set<string> = stopwords.load('english');
         const dict = new CandidatesDictionary(corpus, stops);
         const result = dict.values();
         const expected = 'video games';
         expect(result).to.include(expected);
+    }
+
+    @test public worksOnLongFormContent() {
+        const file = join(__dirname, '..', '..', 'examples', 'waitbutwhy.txt');
+        const corpus = readFileSync(file, 'utf-8')
+            .replace(/\\[nrt]/g, ' ')
+            .split(/\s+/);
+        const stops: Set<string> = stopwords.load('english');
+        const dict = new CandidatesDictionary(corpus, stops);
+        const result = dict.values();
+        // tslint:disable-next-line
+        // console.log('corpus words: ', result, dict.occurences());
+        expect(result).to.include('intelligence');
+        expect(result).to.include('artificial');
+        expect(result).to.include('ai');
     }
 
 }

@@ -29,6 +29,7 @@ export function rake(params: IAlgorithmParameters): string[] {
 
     // step 4: return the phrases with the best scoring phrases
     return matrix.getBestPhrases();
+
 }
 
 // build a single splitter regexp from the given delimiter characters
