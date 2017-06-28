@@ -4,8 +4,9 @@
   "description": "A pure JS implementation of the Rapid Automated Keyword Extraction (RAKE) algorithm.",
   "main": "dist/lib/index.js",
   "scripts": {
-    "build": "rm -rf dist && tsc -p .",
+    "build": "rm -rf dist && npm run pretty && tsc -p .",
     "lint": "tslint -c tslint.json 'src/**/*.ts' --fix",
+    "pretty": "prettier --single-quote --trailing-comma es5 --write src/**/*.ts",
     "test": "npm run lint && npm run build && mocha --opts .mocha",
     "watch": "mocha-typescript-watch --opts .mocha"
   },
@@ -28,8 +29,10 @@
     "chai": "^3.5.0",
     "mocha": "^3.4.1",
     "mocha-typescript": "^1.1.2",
+    "prettier": "^1.5.2",
     "source-map-support": "^0.4.15",
-    "tslint": "^5.2.0",
+    "tslint": "^5.4.3",
+    "tslint-config-prettier": "^1.1.0",
     "typescript": "^2.3.2"
   },
   "dependencies": {
