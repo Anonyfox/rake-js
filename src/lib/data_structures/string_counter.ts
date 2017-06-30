@@ -7,6 +7,9 @@ export default class StringCounter {
 
   // increase the counter for a given string
   public count(str: string): void {
+    if (!str) {
+      return;
+    }
     if (this.counter[str]) {
       this.counter[str]++;
     } else {
