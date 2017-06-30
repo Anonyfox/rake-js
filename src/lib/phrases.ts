@@ -1,6 +1,6 @@
 import { groupBy, map, sortBy, take } from 'lodash';
 import { strip } from './clean';
-import { Stemmer } from './stemmer';
+import Stemmer from './tools/stemmer';
 
 export class Phrases {
   // hold all results

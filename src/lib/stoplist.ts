@@ -1,4 +1,8 @@
-import { strip } from './clean';
+/**
+ * This module loads a big list of stopwords for various languages from the
+ * json file in the `data` folder, and returns the specific list for a given
+ * language as a `Set`.
+ */
 
 // tslint:disable-next-line
 const stopwords = require('../../data/stopwords.json');

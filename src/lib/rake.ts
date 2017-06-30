@@ -3,8 +3,8 @@ import { languageName } from './clean';
 import { clean, strip } from './clean';
 import { Matrix } from './matrix';
 import { Phrases } from './phrases';
-import { Stemmer } from './stemmer';
 import { load } from './stoplist';
+import Stemmer from './tools/stemmer';
 
 // can be used to tweak the algorithm or to use it without the defaults
 export interface IAlgorithmOptions {

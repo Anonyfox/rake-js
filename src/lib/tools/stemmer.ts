@@ -1,23 +1,26 @@
 /**
  * This Stemmer is a class and not a function because it must be able to track
  * all processed words and stems for later usage. You can initialize one for
- * a given language and then use its `stem` method repeatedly.
+ * a given language and then use its `stem` method repeatedly. It keeps track
+ * of both: words and their stems, simultanously.
  */
 
 import * as Snowball from 'snowball';
+import StringCounter from '../data_structures/string_counter';
 
-export class Stemmer {
+export default class Stemmer {
   // cache mapping 'word' -> 'stem'
   public wordStems: { [word: string]: string } = {};
 
   // cache occurences of stems and words
-  public wordCounts: { [word: string]: number } = {};
-  public stemCounts: { [stem: string]: number } = {};
+  private wordCounts = new StringCounter();
+  private stemCounts = new StringCounter();
 
   // external stemming library
   private stemmer: any;
 
-  // for a list of available languages, see https://github.com/fortnightlabs/snowball-js/tree/master/stemmer/src/ext
+  // for a list of available languages, see
+  // https://github.com/fortnightlabs/snowball-js/tree/master/stemmer/src/ext
   constructor(private language: string = 'english') {
     this.stemmer = new Snowball(language);
   }
@@ -31,30 +34,12 @@ export class Stemmer {
       stem = this.stemmer.getCurrent();
       this.wordStems[word] = stem;
     }
-    this.trackStem(stem);
-    this.trackWord(word);
+    this.stemCounts.count(stem);
+    this.wordCounts.count(word);
     return stem;
   }
 
   public getStems() {
-    return Object.keys(this.stemCounts);
-  }
-
-  // just '+1' the given word
-  private trackWord(word: string) {
-    if (this.wordCounts[word]) {
-      this.wordCounts[word]++;
-    } else {
-      this.wordCounts[word] = 1;
-    }
-  }
-
-  // just '+1' the given stem
-  private trackStem(stem: string) {
-    if (this.stemCounts[stem]) {
-      this.stemCounts[stem]++;
-    } else {
-      this.stemCounts[stem] = 1;
-    }
+    return this.stemCounts.strings();
   }
 }
