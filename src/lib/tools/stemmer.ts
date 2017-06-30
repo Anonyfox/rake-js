@@ -7,16 +7,11 @@
 
 import * as Snowball from 'snowball'
 import StringCounter from '../data_structures/string_counter'
+import StringDictionary from '../data_structures/string_dictionary'
 
 export default class Stemmer {
-  // cache mapping 'word' -> 'stem'
-  public wordStems: { [word: string]: string } = {}
-
-  // cache occurences of stems and words
-  private wordCounts = new StringCounter()
+  private wordStems = new StringDictionary()
   private stemCounts = new StringCounter()
-
-  // external stemming library
   private stemmer: any
 
   // for a list of available languages, see
@@ -27,15 +22,14 @@ export default class Stemmer {
 
   // process a given word, return the stem, and track metrics
   public stem(word: string): string {
-    let stem = this.wordStems[word]
+    let stem = this.wordStems.get(word)
     if (!stem) {
       this.stemmer.setCurrent(word)
       this.stemmer.stem()
       stem = this.stemmer.getCurrent()
-      this.wordStems[word] = stem
+      this.wordStems.add(word, stem)
     }
     this.stemCounts.count(stem)
-    // this.wordCounts.count(word);
     return stem
   }
 

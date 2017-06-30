@@ -3,7 +3,7 @@ import { skip, slow, suite, test, timeout } from 'mocha-typescript'
 import Stemmer from '../../lib/tools/stemmer'
 
 @suite(timeout(100), slow(10))
-class StringCounterTest {
+class StemmerTest {
   @test
   public worksWithEnglishDefaults() {
     const stemmer = new Stemmer()
