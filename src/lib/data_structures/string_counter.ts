@@ -3,22 +3,22 @@
  */
 export default class StringCounter {
   // the actual data store implemented with a plain object
-  private counter: { [word: string]: number } = {};
+  private counter: { [word: string]: number } = {}
 
   // increase the counter for a given string
   public count(str: string): void {
     if (!str) {
-      return;
+      return
     }
     if (this.counter[str]) {
-      this.counter[str]++;
+      this.counter[str]++
     } else {
-      this.counter[str] = 1;
+      this.counter[str] = 1
     }
   }
 
   // return a list of all strings counted yet
   public strings(): string[] {
-    return Object.keys(this.counter);
+    return Object.keys(this.counter)
   }
 }

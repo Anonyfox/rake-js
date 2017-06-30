@@ -4,10 +4,10 @@
  */
 
 // used packages
-import * as condenseWhitespace from 'condense-whitespace';
-import * as franc from 'franc';
-import { isString } from 'lodash';
-import * as stopwords from 'nltk-stopwords';
+import * as condenseWhitespace from 'condense-whitespace'
+import * as franc from 'franc'
+import { isString } from 'lodash'
+import * as stopwords from 'nltk-stopwords'
 
 // currently supported natural languages
 export type languageName =
@@ -17,14 +17,14 @@ export type languageName =
   | 'dutch'
   | 'portugese'
   | 'spanish'
-  | 'swedish';
+  | 'swedish'
 
 // replace all non-word characters from string
 export function strip(text: string): string {
   const txt = text
     .replace(/[^a-zäöüß']/gi, ' ')
-    .replace(/(^|\s)+\w($|\s)+/g, ' ');
-  return condenseWhitespace(txt);
+    .replace(/(^|\s)+\w($|\s)+/g, ' ')
+  return condenseWhitespace(txt)
 }
 
 // just a few language codes of 'franc' mapped to 'nltk-stopwords'-keys for now
@@ -36,7 +36,7 @@ const languageNameMapping = {
   por: 'portuguese',
   spa: 'spanish',
   swh: 'swedish',
-};
+}
 
 // remove all stopwords from a given string or array of words.
 export function clean(
@@ -44,17 +44,17 @@ export function clean(
   language?: languageName
 ): string {
   if (!language) {
-    language = guessLanguage(text);
+    language = guessLanguage(text)
   }
-  return stopwords.remove(text, language);
+  return stopwords.remove(text, language)
 }
 
 // detect the language of a given string or word array
 function guessLanguage(text: string | string[]): languageName {
   if (isString(text as string)) {
-    return languageNameMapping[franc(text)] || 'english';
+    return languageNameMapping[franc(text)] || 'english'
   } else if ((text as string[]).join) {
-    const corpus = (text as string[]).join(' ');
-    return languageNameMapping[franc(corpus)] || 'english';
+    const corpus = (text as string[]).join(' ')
+    return languageNameMapping[franc(corpus)] || 'english'
   }
 }

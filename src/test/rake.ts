@@ -1,19 +1,19 @@
-import { expect } from 'chai';
-import { readFileSync } from 'fs';
-import { skip, slow, suite, test, timeout } from 'mocha-typescript';
-import { join } from 'path';
-import * as Snowball from 'snowball';
-import { load } from '../lib/stoplist';
+import { expect } from 'chai'
+import { readFileSync } from 'fs'
+import { skip, slow, suite, test, timeout } from 'mocha-typescript'
+import { join } from 'path'
+import * as Snowball from 'snowball'
+import { load } from '../lib/stoplist'
 
-import { buildDelimiterRegexp, IAlgorithmParameters, rake } from '../lib/rake';
+import { buildDelimiterRegexp, IAlgorithmParameters, rake } from '../lib/rake'
 
 @suite(timeout(1000), slow(100))
 class RAKE {
   @test
   public buildSplitterFromDelimiterArray() {
-    const input = ['\\s', '\\.', '\\?', '!'];
-    const result = /[(\s)(\.)(\?)(!)]/g.toString();
-    expect(buildDelimiterRegexp(input).toString()).to.be.equal(result);
+    const input = ['\\s', '\\.', '\\?', '!']
+    const result = /[(\s)(\.)(\?)(!)]/g.toString()
+    expect(buildDelimiterRegexp(input).toString()).to.be.equal(result)
   }
 
   @test
@@ -26,81 +26,81 @@ class RAKE {
                 their systems.`,
       delimiters: ['\\s+'],
       language: 'english',
-    };
+    }
     const expected = [
       'video games',
       'purportedly wasting time',
       'influencing violent behaviors',
       'stifling creativity',
-    ];
-    const result = rake(input);
+    ]
+    const result = rake(input)
     // tslint:disable-next-line
     // console.log(result);
-    expect(result).to.have.same.members(expected);
+    expect(result).to.have.same.members(expected)
   }
 
   @test
   public worksWithNewsContent() {
-    const file = join(__dirname, '..', '..', 'examples', 'venturebeat.txt');
+    const file = join(__dirname, '..', '..', 'examples', 'venturebeat.txt')
     const input: IAlgorithmParameters = {
       corpus: readFileSync(file, 'utf-8'),
       delimiters: ['\\s+'],
       language: 'english',
-    };
-    const result = rake(input);
+    }
+    const result = rake(input)
     // tslint:disable-next-line
     // console.log(result);
-    expect(result).to.include('latest game dev tools');
-    expect(result).to.include('video games');
-    expect(result).to.include('machine learning');
+    expect(result).to.include('latest game dev tools')
+    expect(result).to.include('video games')
+    expect(result).to.include('machine learning')
   }
 
   @test
   public worksWithGermanNewsContent() {
-    const file = join(__dirname, '..', '..', 'examples', 'spiegel.txt');
+    const file = join(__dirname, '..', '..', 'examples', 'spiegel.txt')
     const input: IAlgorithmParameters = {
       corpus: readFileSync(file, 'utf-8'),
       delimiters: ['\\s+'],
       language: 'german',
-    };
-    const result = rake(input);
+    }
+    const result = rake(input)
     // tslint:disable-next-line
     // console.log(result);
-    expect(result).to.include('mietpreisbremse');
-    expect(result).to.include('vermieter');
-    expect(result).to.include('deutschland');
+    expect(result).to.include('mietpreisbremse')
+    expect(result).to.include('vermieter')
+    expect(result).to.include('deutschland')
   }
 
   @test
   public worksWithGermanPressContent() {
-    const file = join(__dirname, '..', '..', 'examples', 'ntv.txt');
+    const file = join(__dirname, '..', '..', 'examples', 'ntv.txt')
     const input: IAlgorithmParameters = {
       corpus: readFileSync(file, 'utf-8'),
       delimiters: ['\\s+'],
       language: 'german',
-    };
-    const result = rake(input);
+    }
+    const result = rake(input)
     // tslint:disable-next-line
     // console.log(result);
-    expect(result).to.include('teleskop');
-    expect(result).to.include('california institute of technology');
-    expect(result).to.include('de zeeuw');
+    expect(result).to.include('teleskop')
+    expect(result).to.include('california institute of technology')
+    expect(result).to.include('de zeeuw')
   }
 
   @test
   public worksWithLongFormContent() {
-    const file = join(__dirname, '..', '..', 'examples', 'waitbutwhy.txt');
+    const file = join(__dirname, '..', '..', 'examples', 'waitbutwhy.txt')
     const input: IAlgorithmParameters = {
       corpus: readFileSync(file, 'utf-8'),
       delimiters: ['\\s+'],
       language: 'english',
-    };
-    const result = rake(input);
+    }
+    const result = rake(input)
     // tslint:disable-next-line
     // console.log(result);
-    expect(result).to.include('artificial intelligence');
-    expect(result).to.include('brain emulation');
-    expect(result).to.include('computers');
-    expect(result).to.include('evolution');
+    expect(result).to.include('artificial intelligence')
+    expect(result).to.include('brain emulation')
+    expect(result).to.include('computers')
+    expect(result).to.include('evolution')
   }
 }
