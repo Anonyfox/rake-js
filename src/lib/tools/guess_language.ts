@@ -4,8 +4,6 @@
  */
 
 import * as franc from 'franc'
-import { isString } from 'lodash'
-import * as stopwords from 'nltk-stopwords'
 
 // currently supported natural languages
 export type languageName =
@@ -28,23 +26,7 @@ const languageNameMapping = {
   swh: 'swedish',
 }
 
-// remove all stopwords from a given string or array of words.
-export function clean(
-  text: string | string[],
-  language?: languageName
-): string {
-  if (!language) {
-    language = guessLanguage(text)
-  }
-  return stopwords.remove(text, language)
-}
-
 // detect the language of a given string or word array
-function guessLanguage(text: string | string[]): languageName {
-  if (isString(text as string)) {
-    return languageNameMapping[franc(text)] || 'english'
-  } else if ((text as string[]).join) {
-    const corpus = (text as string[]).join(' ')
-    return languageNameMapping[franc(corpus)] || 'english'
-  }
+export default function guessLanguage(text: string): languageName {
+  return languageNameMapping[franc(text)] || 'english'
 }

@@ -1,10 +1,10 @@
-import { groupBy, invert, map, sortBy, sum, take } from 'lodash'
-import { clean, languageName } from './clean'
+import { map } from 'lodash'
 import { Matrix } from './matrix'
 import { Phrases } from './phrases'
 import { load } from './stoplist'
+import { languageName } from './tools/guess_language'
+import Preprocessor from './tools/preprocessor'
 import Stemmer from './tools/stemmer'
-import strip from './tools/strip'
 
 // can be used to tweak the algorithm or to use it without the defaults
 export interface IAlgorithmOptions {
@@ -19,8 +19,8 @@ export interface IAlgorithmParameters extends IAlgorithmOptions {
 
 export function rake(params: IAlgorithmParameters): string[] {
   // step 1: split the corpus text into a word array on `delimiters`
-  const splitter = buildDelimiterRegexp(params.delimiters)
-  const wordArray = params.corpus.replace(/\\[nrt]/g, '. ').split(splitter)
+  const preprocessor = new Preprocessor(params.delimiters)
+  const wordArray = preprocessor.process(params.corpus)
 
   // step 2: loop through all words, generate ngrams/stems/phrases/metrics
   const stemmer = new Stemmer(params.language)
@@ -43,11 +43,4 @@ export function rake(params: IAlgorithmParameters): string[] {
   phrases.joinDuplicates()
   const results = phrases.bestPhrases()
   return results
-}
-
-// build a single splitter regexp from the given delimiter characters
-export function buildDelimiterRegexp(delimiters: string[]): RegExp {
-  const patterns = map(delimiters, d => '(' + d + ')')
-  const expression = '[' + patterns.join('') + ']'
-  return new RegExp(expression, 'g')
 }

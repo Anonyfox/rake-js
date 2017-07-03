@@ -2,20 +2,10 @@ import { expect } from 'chai'
 import { readFileSync } from 'fs'
 import { skip, slow, suite, test, timeout } from 'mocha-typescript'
 import { join } from 'path'
-import * as Snowball from 'snowball'
-import { load } from '../lib/stoplist'
-
-import { buildDelimiterRegexp, IAlgorithmParameters, rake } from '../lib/rake'
+import { IAlgorithmParameters, rake } from '../lib/rake'
 
 @suite(timeout(1000), slow(100))
 class RAKE {
-  @test
-  public buildSplitterFromDelimiterArray() {
-    const input = ['\\s', '\\.', '\\?', '!']
-    const result = /[(\s)(\.)(\?)(!)]/g.toString()
-    expect(buildDelimiterRegexp(input).toString()).to.be.equal(result)
-  }
-
   @test
   public worksWithSimpleTexts() {
     const input: IAlgorithmParameters = {
@@ -33,9 +23,10 @@ class RAKE {
       'influencing violent behaviors',
       'stifling creativity',
     ]
+
     const result = rake(input)
     // tslint:disable-next-line
-    // console.log(result);
+    // console.log(result)
     expect(result).to.have.same.members(expected)
   }
 
@@ -49,7 +40,7 @@ class RAKE {
     }
     const result = rake(input)
     // tslint:disable-next-line
-    // console.log(result);
+    // console.log(result)
     expect(result).to.include('latest game dev tools')
     expect(result).to.include('video games')
     expect(result).to.include('machine learning')
@@ -81,9 +72,9 @@ class RAKE {
     }
     const result = rake(input)
     // tslint:disable-next-line
-    // console.log(result);
+    // console.log(result)
     expect(result).to.include('teleskop')
-    expect(result).to.include('california institute of technology')
+    expect(result).to.include('california institute of technology caltech')
     expect(result).to.include('de zeeuw')
   }
 

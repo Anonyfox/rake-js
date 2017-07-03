@@ -1,6 +1,6 @@
-import * as franc from 'franc'
 import { merge } from 'lodash'
 import { IAlgorithmOptions, IAlgorithmParameters, rake } from './rake'
+import guessLanguage from './tools/guess_language'
 
 const defaults: IAlgorithmOptions = {
   delimiters: ['\\s+'],
@@ -18,30 +18,4 @@ export default function process(
   const params = merge(options, { corpus: text })
   const keywords = rake(params)
   return keywords
-}
-
-// currently supported natural languages
-type languageName =
-  | 'german'
-  | 'english'
-  | 'italian'
-  | 'dutch'
-  | 'portugese'
-  | 'spanish'
-  | 'swedish'
-
-// just a few language codes of 'franc' mapped to 'nltk-stopwords'-keys for now
-const languageNameMapping = {
-  deu: 'german',
-  eng: 'english',
-  ita: 'italian',
-  nld: 'dutch',
-  por: 'portuguese',
-  spa: 'spanish',
-  swh: 'swedish',
-}
-
-// detect the language of a given string
-function guessLanguage(text: string): languageName {
-  return languageNameMapping[franc(text)] || 'english'
 }
