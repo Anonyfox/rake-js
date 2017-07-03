@@ -1,24 +1,9 @@
 import { expect } from 'chai'
 import { skip, slow, suite, test, timeout } from 'mocha-typescript'
-import { clean, strip } from '../lib/clean'
+import { clean } from '../lib/clean'
 
 @suite(timeout(3000), slow(1000))
 class Index {
-  @test
-  public stripPunctuation() {
-    expect(strip('test.')).to.be.equal('test')
-  }
-
-  @test
-  public stripNoUmlauts() {
-    expect(strip('täst')).to.be.equal('täst')
-  }
-
-  @test
-  public stripBadWhitespace() {
-    expect(strip(' aa  \t \r \n \r\n bb ')).to.be.equal('aa bb')
-  }
-
   @test
   public cleanStringEnglish() {
     const input = clean(

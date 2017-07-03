@@ -1,10 +1,10 @@
 import { groupBy, invert, map, sortBy, sum, take } from 'lodash'
-import { languageName } from './clean'
-import { clean, strip } from './clean'
+import { clean, languageName } from './clean'
 import { Matrix } from './matrix'
 import { Phrases } from './phrases'
 import { load } from './stoplist'
 import Stemmer from './tools/stemmer'
+import strip from './tools/strip'
 
 // can be used to tweak the algorithm or to use it without the defaults
 export interface IAlgorithmOptions {

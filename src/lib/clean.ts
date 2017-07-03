@@ -3,8 +3,6 @@
  * from strings. It is able to detect the natural language on its own.
  */
 
-// used packages
-import * as condenseWhitespace from 'condense-whitespace'
 import * as franc from 'franc'
 import { isString } from 'lodash'
 import * as stopwords from 'nltk-stopwords'
@@ -18,14 +16,6 @@ export type languageName =
   | 'portugese'
   | 'spanish'
   | 'swedish'
-
-// replace all non-word characters from string
-export function strip(text: string): string {
-  const txt = text
-    .replace(/[^a-zäöüß']/gi, ' ')
-    .replace(/(^|\s)+\w($|\s)+/g, ' ')
-  return condenseWhitespace(txt)
-}
 
 // just a few language codes of 'franc' mapped to 'nltk-stopwords'-keys for now
 const languageNameMapping = {
