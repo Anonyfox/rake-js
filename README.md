@@ -3,6 +3,7 @@
 A pure JS implementation of the Rapid Automated Keyword Extraction (RAKE) algorithm. Put in any text corpus, get back a bunch of keyphrases and keywords.
 
 [![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
+[![Build Status](https://travis-ci.org/Anonyfox/rake-js.svg?branch=master)](https://travis-ci.org/Anonyfox/rake-js)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](http://www.gnu.org/licenses/lgpl-3.0)
 
@@ -49,14 +50,6 @@ When the corpus is divided by something other than whitespace (eg: `;`):
 This algorithm is *fast*, compared with other approaches like TextRank. The results are surprisingly good for a cross-language algorithm, and the truly relevant keywords / phrases are included in the result in most cases. For more details about the RAKE algorithm, read [the original paper](https://www.researchgate.net/publication/227988510_Automatic_Keyword_Extraction_from_Individual_Documents).
 
 There are still rough edges in the code, but I tried to translate the abstract algorithm into a solid software package, tested and typesafe. Actually I wrote this thing because I was very disappointed with all the existing solutions on NPM, and I hope this repository is easier to contribute to in the future.
-
-badges todo:
-- https://david-dm.org
-- https://travis-ci.com
-- https://codeclimate.com
-- https://www.versioneye.com
-- https://nodei.co
-- ... https://github.com/boennemann/badges
 
 ## Roadmap:
 
