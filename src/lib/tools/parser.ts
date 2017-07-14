@@ -1,8 +1,15 @@
 import { groupBy, map, sortBy, take } from 'lodash'
-import Stemmer from './tools/stemmer'
-import strip from './tools/strip'
+import Phrase from '../data_structures/phrase'
+import Stemmer from './stemmer'
+import strip from './strip'
 
-export class Phrases {
+/**
+ * This Parser is able to take a bag of words (from a preprocessed text corpus)
+ * and collect them into an array of Phrases. Phrases are n-grams of
+ * subsequent words which may describe the corpus better than the individual
+ * words standalone.
+ */
+export default class Parser {
   // hold all results
   public phrases: Phrase[] = []
 
@@ -15,10 +22,12 @@ export class Phrases {
   }
 
   // execute a given word array and add the results to the internal corpora
-  public process(wordArray: string[]) {
+  public process(wordArray: string[]): Parser {
     for (const phrase of wordArray) {
       this.push(phrase.toLowerCase())
     }
+    this.stemAll()
+    return this
   }
 
   public joinDuplicates() {
@@ -37,7 +46,8 @@ export class Phrases {
 
   public bestPhrases(): string[] {
     const phrases = sortBy(this.phrases, ['score', 'text']).reverse()
-    return map(take(phrases, Math.ceil(this.phrases.length / 3.0)), 'text')
+    const optimalAmount = Math.ceil(this.phrases.length / 3.0)
+    return map(take(phrases, optimalAmount), 'text')
   }
 
   // add words to the internal phrase cache, or move on with the next phrase
@@ -59,7 +69,7 @@ export class Phrases {
 
   // reset the internal cache to a new blank object
   private setNewPhraseCache() {
-    this.cache = new Phrase(this.stemmer)
+    this.cache = new Phrase()
   }
 
   // move the internal cache into the result list, reset the cache
@@ -70,41 +80,11 @@ export class Phrases {
       this.setNewPhraseCache()
     }
   }
-}
 
-// tslint:disable-next-line
-export class Phrase {
-  public text: string
-  public words: string[] = []
-  public stems: string[] = []
-  public score: number = 0.0
-
-  constructor(private stemmer: Stemmer) {}
-
-  public isEmpty() {
-    return this.words.length === 0
-  }
-
-  public pushWord(word: string) {
-    if (word && word.length > 1) {
-      this.words.push(word)
-      this.stems.push(this.stemmer.stem(word))
+  // stemm all words in all phrases
+  private stemAll() {
+    for (const phrase of this.phrases) {
+      phrase.calculateStems(this.stemmer)
     }
-  }
-
-  public createText() {
-    this.text = this.words.join(' ')
-  }
-
-  public calculateScore(stemIndex: { [stem: string]: number }) {
-    let sum = 0.0
-    for (const stem of this.stems) {
-      sum += stemIndex[stem]
-    }
-    this.score = sum
-  }
-
-  public multiplyWith(amount: number) {
-    this.score *= amount
   }
 }

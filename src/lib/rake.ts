@@ -1,8 +1,8 @@
 import { map } from 'lodash'
 import { Matrix } from './matrix'
-import { Phrases } from './phrases'
 import { load } from './stoplist'
 import { languageName } from './tools/guess_language'
+import Parser from './tools/parser'
 import Preprocessor from './tools/preprocessor'
 import Stemmer from './tools/stemmer'
 
@@ -25,22 +25,20 @@ export function rake(params: IAlgorithmParameters): string[] {
   // step 2: loop through all words, generate ngrams/stems/phrases/metrics
   const stemmer = new Stemmer(params.language)
   const stopwords = load(params.language)
-  const phrases = new Phrases(stemmer, stopwords)
-  phrases.process(wordArray)
+  const parser = new Parser(stemmer, stopwords).process(wordArray)
 
   // step 3: build a co-occurence matrix for all words (-> stems)
   const stemList = stemmer.getStems()
   const matrix = new Matrix(stemList)
-  for (const phrase of phrases.phrases) {
+  for (const phrase of parser.phrases) {
     matrix.process(phrase.stems)
   }
   const stemScores = matrix.calculateScores()
 
   // step 4: examine the phrases with the best combined scores
-  for (const phrase of phrases.phrases) {
+  for (const phrase of parser.phrases) {
     phrase.calculateScore(stemScores)
   }
-  phrases.joinDuplicates()
-  const results = phrases.bestPhrases()
-  return results
+  parser.joinDuplicates()
+  return parser.bestPhrases()
 }
