@@ -1,17 +1,14 @@
 import { merge } from 'lodash'
-import { IAlgorithmOptions, IAlgorithmParameters, rake } from './rake'
+import { IOptions, rake } from './rake'
 import guessLanguage from './tools/guess_language'
 
-const defaults: IAlgorithmOptions = {
+const defaults: IOptions = {
   delimiters: ['\\s+'],
   language: 'english',
 }
 
-export default function process(
-  text: string,
-  opts?: IAlgorithmOptions
-): string[] {
-  const options: IAlgorithmOptions = merge({}, defaults, opts)
+export default function process(text: string, opts?: IOptions): string[] {
+  const options: IOptions = merge({}, defaults, opts)
   if (!opts || !opts.language) {
     options.language = guessLanguage(text)
   }

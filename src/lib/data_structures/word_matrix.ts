@@ -1,4 +1,4 @@
-export class Matrix {
+export default class WordMatrix {
   public matrix: number[][]
   private scores: { [key: string]: number } = {}
   private size: number

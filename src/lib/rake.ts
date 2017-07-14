@@ -1,23 +1,23 @@
 import { map } from 'lodash'
-import { Matrix } from './matrix'
-import { load } from './stoplist'
+import Matrix from './data_structures/word_matrix'
 import { languageName } from './tools/guess_language'
 import Parser from './tools/parser'
 import Preprocessor from './tools/preprocessor'
 import Stemmer from './tools/stemmer'
+import load from './tools/stoplist'
 
 // can be used to tweak the algorithm or to use it without the defaults
-export interface IAlgorithmOptions {
+export interface IOptions {
   delimiters: string[]
   language: languageName
 }
 
 // the actual parameters for the RAKE algorithm
-export interface IAlgorithmParameters extends IAlgorithmOptions {
+export interface IParameters extends IOptions {
   corpus: string
 }
 
-export function rake(params: IAlgorithmParameters): string[] {
+export function rake(params: IParameters): string[] {
   // step 1: split the corpus text into a word array on `delimiters`
   const preprocessor = new Preprocessor(params.delimiters)
   const wordArray = preprocessor.process(params.corpus)

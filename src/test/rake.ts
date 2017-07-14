@@ -2,13 +2,13 @@ import { expect } from 'chai'
 import { readFileSync } from 'fs'
 import { skip, slow, suite, test, timeout } from 'mocha-typescript'
 import { join } from 'path'
-import { IAlgorithmParameters, rake } from '../lib/rake'
+import { IParameters, rake } from '../lib/rake'
 
 @suite(timeout(1000), slow(100))
 class RAKE {
   @test
   public worksWithSimpleTexts() {
-    const input: IAlgorithmParameters = {
+    const input: IParameters = {
       corpus: `For decades, video games have been criticized for
                 purportedly wasting time, stifling creativity, and even
                 influencing violent behaviors. Now, it seems that video games
@@ -33,7 +33,7 @@ class RAKE {
   @test
   public worksWithNewsContent() {
     const file = join(__dirname, '..', '..', 'examples', 'venturebeat.txt')
-    const input: IAlgorithmParameters = {
+    const input: IParameters = {
       corpus: readFileSync(file, 'utf-8'),
       delimiters: ['\\s+'],
       language: 'english',
@@ -49,7 +49,7 @@ class RAKE {
   @test
   public worksWithGermanNewsContent() {
     const file = join(__dirname, '..', '..', 'examples', 'spiegel.txt')
-    const input: IAlgorithmParameters = {
+    const input: IParameters = {
       corpus: readFileSync(file, 'utf-8'),
       delimiters: ['\\s+'],
       language: 'german',
@@ -65,7 +65,7 @@ class RAKE {
   @test
   public worksWithGermanPressContent() {
     const file = join(__dirname, '..', '..', 'examples', 'ntv.txt')
-    const input: IAlgorithmParameters = {
+    const input: IParameters = {
       corpus: readFileSync(file, 'utf-8'),
       delimiters: ['\\s+'],
       language: 'german',
@@ -81,7 +81,7 @@ class RAKE {
   @test
   public worksWithLongFormContent() {
     const file = join(__dirname, '..', '..', 'examples', 'waitbutwhy.txt')
-    const input: IAlgorithmParameters = {
+    const input: IParameters = {
       corpus: readFileSync(file, 'utf-8'),
       delimiters: ['\\s+'],
       language: 'english',
