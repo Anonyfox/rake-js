@@ -8,7 +8,8 @@
     "lint": "tslint -c tslint.json 'src/**/*.ts' --fix",
     "pretty": "prettier --single-quote --no-semi --trailing-comma es5 --write 'src/**/*.ts'",
     "test": "npm run lint && npm run build && mocha --opts .mocha",
-    "watch": "mocha-typescript-watch --opts .mocha"
+    "watch": "mocha-typescript-watch --opts .mocha",
+    "prepublish": "npm run test"
   },
   "keywords": [
     "RAKE",
