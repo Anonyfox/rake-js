@@ -1,6 +1,6 @@
 {
   "name": "rake-js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A pure JS implementation of the Rapid Automated Keyword Extraction (RAKE) algorithm.",
   "main": "dist/lib/index.js",
   "scripts": {
