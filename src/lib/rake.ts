@@ -9,7 +9,8 @@ import load from './tools/stoplist'
 // can be used to tweak the algorithm or to use it without the defaults
 export interface IOptions {
   delimiters: string[]
-  language: languageName
+  language: languageName,
+  stopWords: [],
 }
 
 // the actual parameters for the RAKE algorithm
